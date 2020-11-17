@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			.textAreaClass {
+				overflow: hidden;
+				min-height: 50px;
+			}
+			.textarea1 {
+				width: 250px;
+			}
+			.textarea2 {
+				width: 750px;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<textarea class="textAreaClass textarea1" oninput="auto_grow(this)"></textarea>
+			<textarea class="textAreaClass textarea2" id="myTextAreaId"></textarea>
+		</div>
+		<script type="text/javascript">
+			function auto_grow(element) {
+				element.style.height = "auto";
+				element.style.height = (element.scrollHeight)+"px";
+				var lines = element.value.split('\n');
+				var txt = "";
+				for (var j = 0; j < lines.length; j++) {
+					var line = lines[j];
+					if (line.length) {
+						if (txt.length > 0) {
+							txt += "\n"
+						}
+						txt += "{\"value\":\"" + line + "\",\"translations\":\"{\\\"en-US\\\":\\\"\\\",\\\"he-IL\\\":\\\"\\\",\\\"ru-RU\\\":\\\"\\\"}\"},"
+					}
+				}
+				var textArea = document.getElementById('myTextAreaId');
+				textArea.style.height = element.style.height;
+				textArea.value = txt.substring(0, txt.length - 1);;
+			}
+		</script>
+	</body>
+</html>

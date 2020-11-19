@@ -43,12 +43,14 @@
 				element.style.height = "100%";
 				element.style.height = (element.scrollHeight)+"px";
 				var lines = element.value.split('\n');
-				var values = []
+				var values = [];
 				var body = { name: "DictionaryName", values: values };
+				var position = 1;
 				for (var j = 0; j < lines.length; j++) {
 					var line = lines[j];
 					if (line.length) {
-						values.push({ value: line, position: j + 1, translations: "{\"en-US\":\"\",\"he-IL\":\"\",\"ru-RU\":\"\"}" })
+						values.push({ value: line, position: position, translations: "{\"en-US\":\"\",\"he-IL\":\"\",\"ru-RU\":\"\"}" });
+						position++;
 					}
 				}
 				var textArea = document.getElementById('myTextAreaId');

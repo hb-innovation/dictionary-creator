@@ -40,7 +40,7 @@
 		</section>
 		<script type="text/javascript">
 			function auto_grow(element) {
-				element.style.height = "auto";
+				element.style.height = "100%";
 				element.style.height = (element.scrollHeight)+"px";
 				var lines = element.value.split('\n');
 				var values = []
@@ -54,7 +54,7 @@
 				var textArea = document.getElementById('myTextAreaId');
 				var myJSON = JSON.stringify(body, null, 4);
 				textArea.value = myJSON;
-				textArea.style.height = "auto";
+				textArea.style.height = "100%";
 				textArea.style.height = (textArea.scrollHeight)+"px";
 			}
 		</script>

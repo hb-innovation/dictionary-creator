@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			.container {
+				width: 100%;
+			}
+			
+			.one {
+				overflow: ;
+				width: 30%;
+				height: fit-content;
+				float: left;
+			}
+			
+			.two {
+				overflow: hidden;
+				width: 70%;
+				height: fit-content;
+			}
+			
+			.textAreaClass {
+				width: 100%;
+				overflow: hidden;
+				min-height: 65px;
+				box-sizing: border-box;
+			}
+		</style>
+	</head>
+	<body>
+		<section class="container">
+			<div class="one">
+				<H1>Values</H1>
+				<textarea class="textAreaClass" oninput="auto_grow(this)"></textarea>
+			</div>
+			<div class="two">
+				<H1>Body</H1>
+				<textarea class="textAreaClass" id="myTextAreaId"></textarea>
+			</div>
+		</section>
+		<script type="text/javascript">
+			function auto_grow(element) {
+				element.style.height = "100%";
+				element.style.height = (element.scrollHeight)+"px";
+				var lines = element.value.split('\n');
+				var values = [];
+				var body = [];
+				var a = lines[0].split('\t');
+				for (var j = 1; j < lines.length; j++) {
+					if(lines[j].length > 0) {
+						var part = {};
+						var parts = lines[j].split('\t');
+						for (var i = 1; i < parts.length; i++) {
+							var value = parts[i];
+							if ("TRUE" === value) {
+								value = true;
+							} else if ("FALSE" === value) {
+								value = false;
+							}
+							part[a[i]] = value;
+						}
+						body.push(part);
+					}
+				}
+				var textArea = document.getElementById('myTextAreaId');
+				var myJSON = JSON.stringify(body, null, 4);
+				textArea.value = myJSON;
+				textArea.style.height = "100%";
+				textArea.style.height = (textArea.scrollHeight)+"px";
+			}
+		</script>
+	</body>
+</html>

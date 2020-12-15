@@ -43,21 +43,20 @@
 				element.style.height = "100%";
 				element.style.height = (element.scrollHeight)+"px";
 				var lines = element.value.split('\n');
-				var values = [];
 				var body = [];
-				var a = lines[0].split('\t');
+				var keys = lines[0].split('\t');
 				for (var j = 1; j < lines.length; j++) {
 					if(lines[j].length > 0) {
 						var part = {};
 						var parts = lines[j].split('\t');
-						for (var i = 1; i < parts.length; i++) {
+						for (var i = 0; i < parts.length; i++) {
 							var value = parts[i];
 							if ("TRUE" === value) {
 								value = true;
 							} else if ("FALSE" === value) {
 								value = false;
 							}
-							part[a[i]] = value;
+							part[keys[i]] = value;
 						}
 						body.push(part);
 					}

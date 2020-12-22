@@ -7,7 +7,7 @@
 			}
 			
 			.one {
-				overflow: ;
+				overflow: hidden;
 				width: 30%;
 				height: fit-content;
 				float: left;
@@ -45,18 +45,35 @@
 				var lines = element.value.split('\n');
 				var body = [];
 				var keys = lines[0].split('\t');
+				var columns = [];
+				keys.forEach(key => {
+					key = key.trim();
+					var typename = "(string)";
+					if (key.endsWith("(string)")) {
+						key = key.replace("(string)", "");
+					} else if (key.endsWith("(int)")) {
+						typename = "(int)";
+						key = key.replace("(int)", "");
+					} else if (key.endsWith("(bool)")) {
+						typename = "(bool)";
+						key = key.replace("(bool)", "");
+					}
+					columns.push({ name: key.trim(), type: typename });
+				});
 				for (var j = 1; j < lines.length; j++) {
 					if(lines[j].length > 0) {
 						var part = {};
 						var parts = lines[j].split('\t');
-						for (var i = 0; i < parts.length; i++) {
+						for (var i = 0; i < parts.length && i < columns.length; i++) {
+							var key = columns[i];
 							var value = parts[i];
-							if ("TRUE" === value) {
-								value = true;
-							} else if ("FALSE" === value) {
-								value = false;
+							if ("(string)" === key.type) {
+								part[key.name] = value;
+							} else if ("(int)" === key.type) {
+								part[key.name] = parseInt(value);
+							} else if("(bool)" === key.type) {
+								part[key.name] = value.toLowerCase() == 'true';
 							}
-							part[keys[i]] = value;
 						}
 						body.push(part);
 					}

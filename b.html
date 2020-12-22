@@ -1,89 +1,92 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<style>
-			.container {
-				width: 100%;
-			}
-			
-			.one {
-				overflow: hidden;
-				width: 30%;
-				height: fit-content;
-				float: left;
-			}
-			
-			.two {
-				overflow: hidden;
-				width: 70%;
-				height: fit-content;
-			}
-			
-			.textAreaClass {
-				width: 100%;
-				overflow: hidden;
-				min-height: 65px;
-				box-sizing: border-box;
-			}
-		</style>
-	</head>
-	<body>
-		<section class="container">
-			<div class="one">
-				<H1>Values</H1>
-				<textarea class="textAreaClass" oninput="auto_grow(this)"></textarea>
-			</div>
-			<div class="two">
-				<H1>Body</H1>
-				<textarea class="textAreaClass" id="myTextAreaId"></textarea>
-			</div>
-		</section>
-		<script type="text/javascript">
-			function auto_grow(element) {
-				element.style.height = "100%";
-				element.style.height = (element.scrollHeight)+"px";
-				var lines = element.value.split('\n');
-				var body = [];
-				var keys = lines[0].split('\t');
-				var columns = [];
-				keys.forEach(key => {
-					key = key.trim();
-					var typename = "(string)";
-					if (key.endsWith("(string)")) {
-						key = key.replace("(string)", "");
-					} else if (key.endsWith("(int)")) {
-						typename = "(int)";
-						key = key.replace("(int)", "");
-					} else if (key.endsWith("(bool)")) {
-						typename = "(bool)";
-						key = key.replace("(bool)", "");
-					}
-					columns.push({ name: key.trim(), type: typename });
-				});
-				for (var j = 1; j < lines.length; j++) {
-					if(lines[j].length > 0) {
-						var part = {};
-						var parts = lines[j].split('\t');
-						for (var i = 0; i < parts.length && i < columns.length; i++) {
-							var key = columns[i];
-							var value = parts[i];
-							if ("(string)" === key.type) {
-								part[key.name] = value;
-							} else if ("(int)" === key.type) {
-								part[key.name] = parseInt(value);
-							} else if("(bool)" === key.type) {
-								part[key.name] = value.toLowerCase() == 'true';
-							}
-						}
-						body.push(part);
-					}
-				}
-				var textArea = document.getElementById('myTextAreaId');
-				var myJSON = JSON.stringify(body, null, 4);
-				textArea.value = myJSON;
-				textArea.style.height = "100%";
-				textArea.style.height = (textArea.scrollHeight)+"px";
-			}
-		</script>
-	</body>
+    <head>
+        <style>
+            .container {
+                width: 100%;
+            }
+
+            .one {
+                overflow: hidden;
+                width: 30%;
+                height: fit-content;
+                float: left;
+            }
+
+            .two {
+                overflow: hidden;
+                width: 70%;
+                height: fit-content;
+            }
+
+            .textAreaClass {
+                width: 100%;
+                overflow: hidden;
+                min-height: 65px;
+                box-sizing: border-box;
+            }
+        </style>
+    </head>
+    <body>
+        <section class="container">
+            <div class="one">
+                <H1>Values</H1>
+                <textarea class="textAreaClass" oninput="auto_grow(this)"></textarea>
+            </div>
+            <div class="two">
+                <H1>Body</H1>
+                <textarea class="textAreaClass" id="myTextAreaId"></textarea>
+            </div>
+        </section>
+        <script type="text/javascript">
+            function auto_grow(element) {
+                element.style.height = "100%";
+                element.style.height = (element.scrollHeight) + "px";
+                var lines = element.value.split('\n');
+                var body = [];
+                var keys = lines[0].split('\t');
+                var columns = [];
+                keys.forEach(key=>{
+                    key = key.trim();
+                    var typename = "(string)";
+                    if (key.endsWith("(string)")) {
+                        key = key.replace("(string)", "");
+                    } else if (key.endsWith("(int)")) {
+                        typename = "(int)";
+                        key = key.replace("(int)", "");
+                    } else if (key.endsWith("(bool)")) {
+                        typename = "(bool)";
+                        key = key.replace("(bool)", "");
+                    }
+                    columns.push({
+                        name: key.trim(),
+                        type: typename
+                    });
+                });
+                for (var j = 1; j < lines.length; j++) {
+                    if (lines[j].length > 0) {
+                        var part = {};
+                        var parts = lines[j].split('\t');
+                        for (var i = 0; i < parts.length && i < columns.length; i++) {
+                            var key = columns[i];
+                            var value = parts[i];
+                            if ("(string)" === key.type) {
+                                part[key.name] = value;
+                            } else if ("(int)" === key.type) {
+                                part[key.name] = parseInt(value);
+                            } else if ("(bool)" === key.type) {
+                                part[key.name] = value.toLowerCase() == 'true';
+                            }
+                        }
+                        body.push(part);
+                    }
+                }
+                var textArea = document.getElementById('myTextAreaId');
+                var myJSON = JSON.stringify(body, null, 4);
+                textArea.value = myJSON;
+                textArea.style.height = "100%";
+                textArea.style.height = (textArea.scrollHeight) + "px";
+            }
+        </script>
+    </body>
 </html>

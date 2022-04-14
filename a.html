@@ -7,7 +7,6 @@
 			}
 			
 			.one {
-				overflow: ;
 				width: 30%;
 				height: fit-content;
 				float: left;
@@ -49,8 +48,15 @@
 				for (var j = 0; j < lines.length; j++) {
 					var line = lines[j];
 					if (line.length) {
-						values.push({ value: line, position: position, translations: "{\"en-US\":\"\",\"he-IL\":\"\",\"ru-RU\":\"\"}" });
-						position++;
+						var parts = line.split('\t');
+						if (parts.length) {
+							var value = { value: parts[0], position: position, translations: "{\"en-US\":\"\",\"he-IL\":\"\",\"ru-RU\":\"\"}" }
+							if (parts[1]) {
+								value.externalId = parts[1]
+							}
+							values.push(value);
+							position++;
+						}
 					}
 				}
 				var textArea = document.getElementById('myTextAreaId');
